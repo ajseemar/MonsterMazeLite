@@ -1,0 +1,25 @@
+{
+  "name": "MonsterMaze",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "webpack": "webpack --watch --mode=development"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ajseemar/MonsterMazeLite.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ajseemar/MonsterMazeLite/issues"
+  },
+  "homepage": "https://github.com/ajseemar/MonsterMazeLite#readme",
+  "dependencies": {
+    "webpack": "^4.31.0",
+    "webpack-cli": "^3.3.2"
+  }
+}
