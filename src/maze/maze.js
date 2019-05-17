@@ -1,26 +1,31 @@
-const Grid = require('./maze/grid');
+const Grid = require('./grid');
+const index = require('../utils/utils');
 
 class Maze {
-    constructor () {
-        this.grid = new Grid(size, this.width, this.height);
+    constructor (size, width, height) {
+        this.cellCount = size;
+        this.width = width;
+        this.height = height;
+        this.grid = new Grid(this.cellCount, this.width, this.height);
+        // // debugger
+        this.generateMaze();
     }
-    
+
+
     generateMaze () {
+        let currentCell = this.grid.cells[0];
         const stack = [];
-        let currentCell = this.grid[0][0]
-        this.grid.cells.forEach(cell => {
-            stack.push(cell);
-            cell.visited = true;
-
-            if (cell.neighbors.length > 0) {
-
-            } else {
-
-            }
-        });
+        stack.push(currentCell);
+        while (stack.length !== 0) {
+            // debugger
+            let neighbor = currentCell.findNeighbor(this.cells, this.cellCount);
+            if (neighbor) console.log('neighbor found');
+        }
     }
 
-    render () {
-        this.grid.render(this.ctx);
+    render (ctx) {
+        this.grid.render(ctx);
     }
 }
+
+module.exports = Maze;
