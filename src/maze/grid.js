@@ -69,14 +69,14 @@ class Grid {
         for (let j = 0; j < this.cellCount; j++) {
             for (let i = 0; i < this.cellCount; i++) {
                 let cell = this.cells[index(j, i, this.cellCount)];
-                if (cell.visited) {
-                    // debugger;
-                    ctx.fillStyle = "rgba (100, 23, 128, 100)";
-                    ctx.fillRect(cell.col * cell.size, cell.row * cell.size, cell.size, cell.size)
+                // if (cell.visited) {
+                //     // debugger;
+                //     ctx.fillStyle = "rgba (100, 23, 128, 100)";
+                //     ctx.fillRect(cell.col * cell.size, cell.row * cell.size, cell.size, cell.size)
                     
-                    // ctx.fillStyle = "#FF0000";
-                    // ctx.fillRect(i * cell.size, j * cell.size, cell.size, cell.size);
-                }
+                //     // ctx.fillStyle = "#FF0000";
+                //     // ctx.fillRect(i * cell.size, j * cell.size, cell.size, cell.size);
+                // }
                 ctx.fillSyle = "#53A1F3";
                 // console.log(cell);
                 Object.values(cell.walls).forEach(({ p1, p2 }) => {
