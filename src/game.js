@@ -8,7 +8,7 @@ class Game {
         this.height = this.canvas.height;
         this.initialTime = Date.now();
 
-        this.maze = new Maze(10, this.width, this.height, this.ctx);
+        this.maze = new Maze(15, this.width, this.height, this.ctx);
     }
 
     update () {
