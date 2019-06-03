@@ -69,24 +69,18 @@ class Grid {
         for (let j = 0; j < this.cellCount; j++) {
             for (let i = 0; i < this.cellCount; i++) {
                 let cell = this.cells[index(j, i, this.cellCount)];
-                // if (cell.visited) {
-                //     // debugger;
-                //     ctx.fillStyle = "rgba (100, 23, 128, 100)";
-                //     ctx.fillRect(cell.col * cell.size, cell.row * cell.size, cell.size, cell.size)
-                    
-                //     // ctx.fillStyle = "#FF0000";
-                //     // ctx.fillRect(i * cell.size, j * cell.size, cell.size, cell.size);
-                // }
-                ctx.fillSyle = "#53A1F3";
-                // console.log(cell);
-                Object.values(cell.walls).forEach(({ p1, p2 }) => {
-                    ctx.moveTo(p1.x, p1.y);
-                    ctx.lineTo(p2.x, p2.y);
-                    ctx.stroke();
-                });
-                // ctx.fillStyle = 'rgb(140, 76, 44, 100)';
-                // ctx.fillRect(0, 0, cell.size, cell.size);
+                cell.render(ctx);
+                // ctx.strokeStyle = '#cc2076';
+                // ctx.beginPath();
+                // ctx.arc(cell.node.position.x, cell.node.position.y, cell.node.position.size, 0, 2 * Math.PI);
+                // // ctx.closePath();
+                // // ctx.lineWidth = 3;
+                // ctx.stroke();
                 // debugger
+                // cell.node.render(ctx);
+
+                
+
             }
         }
     }

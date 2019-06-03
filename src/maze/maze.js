@@ -9,7 +9,7 @@ class Maze {
         this.grid = new Grid(this.cellCount, this.width, this.height, ctx);
 
         this.generateMaze();
-        console.log(this.grid.cells);
+        // console.log(this.grid.cells);
     }
 
 
@@ -25,65 +25,49 @@ class Maze {
                 // console.log(cell.visited);
                 return !cell.visited;
             });
-            // let neighbors = [];
-
-            // for (let i = 0; i < currentCell.neighbors.length; i++) {
-            //     if (!(currentCell.neighbors[i].visited)) {
-            //         neighbors.push(currentCell.neighbors[i]);
-            //     }
-            // }
 
             let neighborDir;
             let neighbor;
 
             let neighborObj = neighbors[Math.floor(Math.random() * neighbors.length)];
-            // console.log(neighborObj);
-            // console.log(currentCell);
-            // console.log(stack);
             if (neighborObj) {
                 neighborDir = Object.keys(neighborObj)[0];
                 neighbor = neighborObj[neighborDir];
-                // neighborObj = null;
             }
 
             if (neighborObj === undefined) {
-                // debugger;
                 currentCell = stack.pop();
-                // stack.pop();
             }
             else {
-                // debugger
                 neighbor.visited = true;
                 switch (neighborDir) {
                     case "north":
-                        // debugger
                         delete currentCell.walls["north"];
                         delete neighbor.walls["south"];
-                        // debugger
+                        currentCell.node.neighbors["north"] = 1;
+                        neighbor.node.neighbors["south"] = 1;
                         break;
                     case "east":
-                        // debugger
                         delete currentCell.walls["east"];
                         delete neighbor.walls["west"];
-                        // debugger
+                        currentCell.node.neighbors["east"] = 1;
+                        neighbor.node.neighbors["west"] = 1;
                         break;
                     case "south":
-                        // debugger
                         delete currentCell.walls["south"];
                         delete neighbor.walls["north"];
-                        // debugger
+                        currentCell.node.neighbors["south"] = 1;
+                        neighbor.node.neighbors["north"] = 1;
                         break;
                     case "west":
-                        // debugger
                         delete currentCell.walls["west"];
                         delete neighbor.walls["east"];
-                        // debugger
+                        currentCell.node.neighbors["west"] = 1;
+                        neighbor.node.neighbors["east"] = 1;
                         break;
                 }
-                // debugger
                 stack.push(neighbor);
                 currentCell = neighbor;
-                // debugger
             }
         }
     }
