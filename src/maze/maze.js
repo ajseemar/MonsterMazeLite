@@ -1,4 +1,5 @@
 const Grid = require('./grid');
+const Solver = require('../maze_solver/solver');
 const index = require('../utils/utils');
 
 class Maze {
@@ -9,6 +10,7 @@ class Maze {
         this.grid = new Grid(this.cellCount, this.width, this.height, ctx);
 
         this.generateMaze();
+        window.solver = this.solver = new Solver(this.grid.cells);
         // console.log(this.grid.cells);
     }
 

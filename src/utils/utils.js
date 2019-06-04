@@ -4,6 +4,6 @@ const index = (i, j, rows) => i + (j * rows);
 
 const heuristic = (a, b) => Math.abs(a.x - b.x) + Math.abs(a.y - b.y);
 
+module.exports = heuristic;
 module.exports = lerp;
 module.exports = index;
-module.exports = heuristic;

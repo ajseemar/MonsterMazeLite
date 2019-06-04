@@ -1,6 +1,9 @@
+const MinHeap = require('./minHeap');
 
 class AStar {
-    constructor (start, end) {
-        
+    constructor (solver) {
+        this.solver = solver;
     }
 }
+
+module.exports = AStar;
