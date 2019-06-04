@@ -9,8 +9,8 @@ class Maze {
         this.height = height;
         this.grid = new Grid(this.cellCount, this.width, this.height, ctx);
 
-        this.generateMaze();
         window.solver = this.solver = new Solver(this.grid.cells);
+        this.generateMaze();
         // console.log(this.grid.cells);
     }
 
@@ -48,24 +48,32 @@ class Maze {
                         delete neighbor.walls["south"];
                         currentCell.node.neighbors["north"] = 1;
                         neighbor.node.neighbors["south"] = 1;
+                        currentCell.node.costs["north"]["g"] = 1;
+                        neighbor.node.costs["south"]["g"] = 1;
                         break;
                     case "east":
                         delete currentCell.walls["east"];
                         delete neighbor.walls["west"];
                         currentCell.node.neighbors["east"] = 1;
                         neighbor.node.neighbors["west"] = 1;
+                        currentCell.node.costs["east"]["g"] = 1;
+                        neighbor.node.costs["west"]["g"] = 1;
                         break;
                     case "south":
                         delete currentCell.walls["south"];
                         delete neighbor.walls["north"];
                         currentCell.node.neighbors["south"] = 1;
                         neighbor.node.neighbors["north"] = 1;
+                        currentCell.node.costs["south"]["g"] = 1;
+                        neighbor.node.costs["north"]["g"] = 1;
                         break;
                     case "west":
                         delete currentCell.walls["west"];
                         delete neighbor.walls["east"];
                         currentCell.node.neighbors["west"] = 1;
                         neighbor.node.neighbors["east"] = 1;
+                        currentCell.node.costs["west"]["g"] = 1;
+                        neighbor.node.costs["east"]["g"] = 1;
                         break;
                 }
                 stack.push(neighbor);
