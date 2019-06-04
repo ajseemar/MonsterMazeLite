@@ -5,22 +5,38 @@ class Node {
             y: (i * size) + (size / 2)
         };
         this.neighbors = {
-            "north": Infinity,
-            "east": Infinity,
-            "south": Infinity,
-            "west": Infinity
+            "north": {
+                f: null,
+                g: Infinity,
+                h: null
+            },
+            "east": {
+                f: null,
+                g: Infinity,
+                h: null
+            },
+            "south": {
+                f: null,
+                g: Infinity,
+                h: null
+            },
+            "west": {
+                f: null,
+                g: Infinity,
+                h: null
+            },
         };
+        Object.values(this.neighbors).forEach(val => val.f = val.g + val.h);
         this.size = 2;
+        this.visited = false;
     }
 
     render (ctx) {
-        // ctx.lineWidth = 0;
         ctx.beginPath();
         ctx.arc(this.position.x, this.position.y, this.size, 0, 2 * Math.PI);
         ctx.closePath();
         ctx.fillStyle = '#72af66';
         ctx.fill();
-        // ctx.closePath();
     }
 }
 

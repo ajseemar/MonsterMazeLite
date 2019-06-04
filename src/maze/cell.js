@@ -65,7 +65,7 @@ class Cell {
             ctx.stroke();
         });
         
-        this.node.render(ctx);
+        if (this.node) this.node.render(ctx);
     }
 }
 
