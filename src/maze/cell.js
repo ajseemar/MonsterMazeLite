@@ -54,6 +54,10 @@ class Cell {
         }
     }
 
+    id () {
+        return `${this.row}${this.col}`;
+    }
+
     render (ctx) {
         ctx.strokeStyle = "#53A1F3";
         // ctx.strokeStyle = "#000";

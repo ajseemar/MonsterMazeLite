@@ -1,4 +1,4 @@
-class MinHeap {
+class PriorityHeap {
     constructor () {
         this.heap = [null];
     }
@@ -15,9 +15,9 @@ class MinHeap {
         return idx * 2 + 1;
     }
 
-    insert(val) {
+    insert(node) {
         // add the new node to the bottom level, far-left 
-        this.heap.push(val);
+        this.heap.push(node);
 
         // then, sift that value up the heap to restore heap property
         this.siftUp(this.heap.length - 1);
@@ -30,7 +30,7 @@ class MinHeap {
         let parentIdx = this.getParent(idx);
 
         // if the node is bigger than it's parent, we are breaking heap property...
-        if (this.heap[parentIdx] > this.heap[idx]) {
+        if (this.heap[parentIdx].costs["f"] > this.heap[idx].costs["f"]) {
             // so swap the node with it's parent
             [this.heap[parentIdx], this.heap[idx]] = [this.heap[idx], this.heap[parentIdx]];
 
@@ -53,15 +53,15 @@ class MinHeap {
         let ary = this.heap;
         let leftIdx = this.getLeftChild(idx);
         let rightIdx = this.getRightChild(idx);
-        let leftVal = ary[leftIdx];
-        let rightVal = ary[rightIdx];
+        let leftNode = ary[leftIdx];
+        let rightNode = ary[rightIdx];
 
-        if (leftVal === undefined) leftVal = Infinity;
-        if (rightVal === undefined) rightVal = Infinity;
+        if (leftNode === undefined) leftNode = {costs: {f: Infinity}};
+        if (rightNode === undefined) rightNode = {costs: {f: Infinity}};
 
-        if (ary[idx] < leftVal && ary[idx] < rightVal) return;
+        if (ary[idx] < leftNode && ary[idx] < rightNode) return;
 
-        if (leftVal > rightVal) {
+        if (leftNode > rightNode) {
             var swapIdx = rightIdx;
         } else {
             var swapIdx = leftIdx;
@@ -72,4 +72,4 @@ class MinHeap {
     }
 }
 
-module.exports = MinHeap;
+module.exports = PriorityHeap;

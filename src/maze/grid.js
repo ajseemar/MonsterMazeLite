@@ -27,39 +27,58 @@ class Grid {
     }
 
     populateCells () {
-        for (let i = 0; i < this.cells.length; i++) 
+        for (let i = 0; i < this.cells.length; i++) {
             Grid.populateCellWithNeighbors(this.cells[i], this.cells, this.cellCount, this.ctx);
+            Grid.populateCellNodeWithNeighbors(this.cells[i], this.cells, this.cellCount, this.ctx);
+        }
     }
 
     static populateCellWithNeighbors (cell, cells, size, ctx) {
         if (cells[index(cell.row - 1, cell.col, size)]) {
-            // if (!cell.visited) {
             if (cell.row - 1 >= 0) {
             cell.neighbors.push({ 'north': cells[index(cell.row - 1, cell.col, size)] });
             }
         }
         if (cells[index(cell.row, cell.col + 1, size)]) {
-            // if (!cell.visited) {
             cell.neighbors.push({ 'east': cells[index(cell.row, cell.col + 1, size)] });
-            // }
         }
         if (cells[index(cell.row + 1, cell.col, size)]) {
-            // if (!cell.visited) {
             if (cell.row + 1 <= size - 1) {
             cell.neighbors.push({ 'south': cells[index(cell.row + 1, cell.col, size)] });
             }
         }
         if (cells[index(cell.row, cell.col - 1, size)]) {
-            // if (!cell.visited) {
             cell.neighbors.push({ 'west': cells[index(cell.row, cell.col - 1, size)] });
-            // }
         }
 
         cell.neighbors.forEach(cellN => {
             ctx.fillStyle = "#9A66AC";
             ctx.fillRect(cellN.row * cellN.size, cellN.col * cellN.size, cellN.size, cellN.size);
         });
-        // debugger
+    }
+
+    static populateCellNodeWithNeighbors (cell, cells, size, ctx) {
+        if (cells[index(cell.row - 1, cell.col, size)]) {
+            if (cell.row - 1 >= 0) {
+                cell.node.neighbors.push({ 'north': cells[index(cell.row - 1, cell.col, size)].node });
+            }
+        }
+        if (cells[index(cell.row, cell.col + 1, size)]) {
+            cell.node.neighbors.push({ 'east': cells[index(cell.row, cell.col + 1, size)].node });
+        }
+        if (cells[index(cell.row + 1, cell.col, size)]) {
+            if (cell.row + 1 <= size - 1) {
+            cell.node.neighbors.push({ 'south': cells[index(cell.row + 1, cell.col, size)].node });
+            }
+        }
+        if (cells[index(cell.row, cell.col - 1, size)]) {
+            cell.node.neighbors.push({ 'west': cells[index(cell.row, cell.col - 1, size)].node });
+        }
+
+        cell.neighbors.forEach(cellN => {
+            ctx.fillStyle = "#9A66AC";
+            ctx.fillRect(cellN.row * cellN.size, cellN.col * cellN.size, cellN.size, cellN.size);
+        });
     }
 
     render (ctx) {

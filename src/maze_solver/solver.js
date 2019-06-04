@@ -1,10 +1,17 @@
-const Node = require('./node');
+// const Node = require('./node');
+const AStar = require('./aStar');
 
 class Solver {
-    constructor (grid) {
+    constructor (gridCells, start, end) {
         this.graph = {};
-        this.cells = grid;
-        grid.forEach(cell => this.graph[cell] = new Node(cell.row, cell.col, cell.size));
+        this.cells = gridCells;
+        this.startNode = start;
+        this.endNode = end;
+        gridCells.forEach(cell => this.graph[cell.id()] = cell.node);
+    }
+
+    solve () {
+        AStar.run(this);
     }
 }
 

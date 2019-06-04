@@ -4,12 +4,18 @@ class Node {
             x: (j * size) + (size / 2),
             y: (i * size) + (size / 2)
         };
-        this.neighbors = {
-            "north": Infinity,
-            "east": Infinity,
-            "south": Infinity,
-            "west": Infinity,
+        this.cost = {
+            f: Infinity,
+            g: Infinity,
+            h: Infinity
         };
+        this.neighbors = [];
+        // this.neighbors = {
+        //     "north": Infinity,
+        //     "east": Infinity,
+        //     "south": Infinity,
+        //     "west": Infinity,
+        // };
         this.costs = {
             "north": {
                 f: null,
@@ -35,7 +41,6 @@ class Node {
         // Object.values(this.neighbors).forEach(val => val.f = val.g + val.h);
         this.size = 2;
         this.visited = false;
-        this.cost = Infinity;
     }
 
     render (ctx) {
