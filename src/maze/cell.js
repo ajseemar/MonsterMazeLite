@@ -1,4 +1,6 @@
-const index = require('../utils/utils');
+// const index = require('../utils/utils');
+
+const Node = require('../maze_solver/node');
 
 class Cell {
     constructor (row, col, size) {
@@ -6,6 +8,7 @@ class Cell {
         this.col = col;
         this.size = size;
         this.visited = false;
+        this.node = new Node(row, col, size);
         this.neighbors = [];
         this.walls = {
             "north": {
@@ -51,35 +54,21 @@ class Cell {
         }
     }
 
-    findNeighbor (cells, size) {
-        // const neighbors = [];
-        // debugger
-        // if (cells[index(this.row, this.col - 1, size)]) {
-        //     // debugger;
-        //     if (!this.visited) {
-        //         neighbors.push({ 'north': cells[index(this.row, this.col - 1, size)] });
-        //     }
-        // }
-        // if (cells[index(this.row + 1, this.col, size)]) {
-        //     if (!this.visited) {
-        //         neighbors.push({ 'east': cells[index(this.row + 1, this.col, size)] });
-        //     }
-        // }
-        // if (cells[index(this.row, this.col + 1, size)]) {
-        //     if (!this.visited) {
-        //         neighbors.push({ 'south': cells[index(this.row, this.col + 1, size)] });
-        //     }
-        // }
-        // if (cells[index(this.row - 1, this.col, size)]) {
-        //     if (!this.visited) {
-        //         neighbors.push({ 'west': cells[index(this.row - 1, this.col, size)] });
-        //     }
-        // }
+    id () {
+        return `${this.row}${this.col}`;
+    }
 
-        // if (neighbors.length > 0) {
-        //     // debugger
-        //     return neighbors[Math.floor(Math.random() * neighbors.length)];
-        // } else return null;
+    render (ctx) {
+        ctx.strokeStyle = "#53A1F3";
+        Object.values(this.walls).forEach(({ p1, p2 }) => {
+            ctx.beginPath();
+            ctx.moveTo(p1.x, p1.y);
+            ctx.lineTo(p2.x, p2.y);
+            ctx.closePath();
+            ctx.stroke();
+        });
+        
+        // if (this.node) this.node.render(ctx);
     }
 }
 

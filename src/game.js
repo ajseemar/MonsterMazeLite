@@ -1,4 +1,5 @@
 const Maze = require('./maze/maze');
+const Player = require('./entities/player');
 
 class Game {
     constructor (size) {
@@ -8,7 +9,8 @@ class Game {
         this.height = this.canvas.height;
         this.initialTime = Date.now();
 
-        this.maze = new Maze(10, this.width, this.height, this.ctx);
+        this.maze = new Maze(size, this.width, this.height, this.ctx);
+        this.player = new Player(this.width / size);
     }
 
     update () {
@@ -19,6 +21,8 @@ class Game {
         // debugger;
         // this.ctx.fillStyle = "#2a6e09";
         // this.ctx.clearRect(0, 0, this.width, this.height);
+        // this.ctx.clearRect(0, 0, this.width, this.height);
+        this.player.render(this.ctx);
         this.maze.render(this.ctx);
     }
 }
