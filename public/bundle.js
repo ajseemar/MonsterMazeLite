@@ -86,6 +86,17 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./src/entities/player.js":
+/*!********************************!*\
+  !*** ./src/entities/player.js ***!
+  \********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("const KEYS = __webpack_require__(/*! ../utils/keys */ \"./src/utils/keys.js\");\n\nclass Player {\n    constructor(size, inputHandler, cellSize, cellCount) {\n        this.size = size / 3; //c.width / (size * 2);\n        // this.screenX = 0;\n        // this.screenY = 0;\n\n        this.position = {\n            x: cellSize / 2,\n            y: cellSize / 2\n        };\n\n        this.velocity = {\n            x: 0,\n            y: 0\n        };\n\n        this.speed = this.size * 5;\n\n\n        this.ih = inputHandler;\n\n        this.cellSize = cellSize;\n        this.cellCount = cellCount;\n    }\n\n    handleInput() {\n        if (this.ih.isPressed(KEYS.UP)) {\n            // this.velocity.x = 0;\n            this.velocity.y = -this.speed;\n        } else if (this.ih.isPressed(KEYS.DOWN)) {\n            // this.velocity.x = 0;\n            this.velocity.y = this.speed;\n        } else {\n            this.velocity.y = 0;\n            // this.velocity.x = 0;\n        }\n\n        if (this.ih.isPressed(KEYS.RIGHT)) {\n            // this.velocity.y = 0;\n            this.velocity.x = this.speed;\n        } else if (this.ih.isPressed(KEYS.LEFT)) {\n            // this.velocity.y = 0;\n            this.velocity.x = -this.speed;\n        } else {\n            this.velocity.x = 0;\n            // this.velocity.y = 0;\n        }\n    }\n\n    update(dt) {\n        this.handleInput();\n        // const maxX = this.size * 100 * 3 - (c.width - 10 * (c.width / 100));\n        // const maxY = this.size * 100 * 3 - (c.height - 10 * (c.height / 100));\n        // console.log(dt)\n        this.position.x += this.velocity.x * dt;\n        this.position.y += this.velocity.y * dt;\n        // this.position.x = Math.max(0, Math.min(this.position.x, (this.cellCount - 1) * this.cellSize));\n        // this.position.y = Math.max(0, Math.min(this.position.y, (this.cellCount - 1) * this.cellSize));\n        // console.log(this.position);\n        // this.screenX = this.position.x;\n        // this.screenY = this.position.y;\n        // console.log(this.screenX, this.screenY);postition.\n    }\n\n    render(ctx, offsetX, offsetY) {\n        // console.log(this.position.x + offsetX, this.position.y + offsetY);\n        offsetX = 0;\n        offsetY = 0;\n        ctx.fillStyle = \"#0ff\";\n        ctx.beginPath();\n        ctx.arc(this.position.x + offsetX, this.position.y + offsetY, this.size, 0, Math.PI * 2)\n        ctx.closePath();\n        ctx.fill();\n    }\n}\n\nmodule.exports = Player;\n\n//# sourceURL=webpack:///./src/entities/player.js?");
+
+/***/ }),
+
 /***/ "./src/game.js":
 /*!*********************!*\
   !*** ./src/game.js ***!
@@ -93,7 +104,7 @@
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("const Maze = __webpack_require__(/*! ./maze/maze */ \"./src/maze/maze.js\");\n\nclass Game {\n    constructor (size) {\n        this.canvas = document.getElementById('canvas');\n        this.ctx = this.canvas.getContext('2d');\n        this.width = this.canvas.width;\n        this.height = this.canvas.height;\n        this.initialTime = Date.now();\n\n        window.maze = this.maze = new Maze(25, this.width, this.height, this.ctx);\n        \n    }\n\n    update () {\n\n    }\n\n    render () {\n        // debugger;\n        // this.ctx.fillStyle = \"#2a6e09\";\n        // this.ctx.clearRect(0, 0, this.width, this.height);\n        // this.ctx.clearRect(0, 0, this.width, this.height);\n        this.maze.render(this.ctx);\n    }\n}\n\nmodule.exports = Game;\n\n//# sourceURL=webpack:///./src/game.js?");
+eval("const Maze = __webpack_require__(/*! ./maze/maze */ \"./src/maze/maze.js\");\nconst InputManager = __webpack_require__(/*! ./utils/input */ \"./src/utils/input.js\");\nconst Player = __webpack_require__(/*! ./entities/player */ \"./src/entities/player.js\");\n\nclass Game {\n    constructor(size) {\n        this.canvas = document.getElementById('canvas');\n        this.ctx = this.canvas.getContext('2d');\n        this.width = this.canvas.width;\n        this.height = this.canvas.height;\n        this.initialTime = Date.now();\n\n        window.maze = this.maze = new Maze(size, this.width, this.height, this.ctx);\n        this.inputHandler = new InputManager();\n        this.player = new Player(this.width / size, this.inputHandler, this.width / size, size)\n    }\n\n    update(dt) {\n        this.player.update(dt);\n    }\n\n    render() {\n        // debugger;\n        // this.ctx.fillStyle = \"#2a6e09\";\n        // this.ctx.clearRect(0, 0, this.width, this.height);\n        // this.ctx.clearRect(0, 0, this.width, this.height);\n        this.ctx.fillStyle = \"#fff\";\n        this.ctx.fillRect(0, 0, this.width, this.height);\n        this.maze.render(this.ctx);\n        this.player.render(this.ctx);\n    }\n}\n\nmodule.exports = Game;\n\n//# sourceURL=webpack:///./src/game.js?");
 
 /***/ }),
 
@@ -104,7 +115,7 @@ eval("const Maze = __webpack_require__(/*! ./maze/maze */ \"./src/maze/maze.js\"
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("const Game = __webpack_require__(/*! ./game */ \"./src/game.js\");\n\ndocument.addEventListener(\"DOMContentLoaded\", () => {\n    const game = new Game(10);\n    const start = () => {\n        let time = Date.now();\n        let dt = (time - game.initialTime / 1000);\n        game.update(dt);\n        game.render();\n        game.initialTime = time;\n        requestAnimationFrame(start);\n    }\n    start();\n});\n\n//# sourceURL=webpack:///./src/index.js?");
+eval("const Game = __webpack_require__(/*! ./game */ \"./src/game.js\");\n\ndocument.addEventListener(\"DOMContentLoaded\", () => {\n    const game = new Game(25);\n    const start = () => {\n        let time = Date.now();\n        let dt = (time - game.initialTime) / 1000.0;\n        game.update(dt);\n        game.render();\n        game.initialTime = time;\n        requestAnimationFrame(start);\n    }\n    start();\n});\n\n//# sourceURL=webpack:///./src/index.js?");
 
 /***/ }),
 
@@ -149,6 +160,28 @@ eval("const Grid = __webpack_require__(/*! ./grid */ \"./src/maze/grid.js\");\nc
 /***/ (function(module, exports) {
 
 eval("class Node {\n    constructor (i, j, size) {\n        this.position = {\n            x: (j * size) + (size / 2),\n            y: (i * size) + (size / 2)\n        };\n        this.neighbors = {\n            \"north\": Infinity,\n            \"east\": Infinity,\n            \"south\": Infinity,\n            \"west\": Infinity\n        };\n        this.size = 2;\n    }\n\n    render (ctx) {\n        // ctx.lineWidth = 0;\n        ctx.beginPath();\n        ctx.arc(this.position.x, this.position.y, this.size, 0, 2 * Math.PI);\n        ctx.closePath();\n        ctx.fillStyle = '#72af66';\n        ctx.fill();\n        // ctx.closePath();\n    }\n}\n\nmodule.exports = Node;\n\n//# sourceURL=webpack:///./src/maze_solver/node.js?");
+
+/***/ }),
+
+/***/ "./src/utils/input.js":
+/*!****************************!*\
+  !*** ./src/utils/input.js ***!
+  \****************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("const KEYS = __webpack_require__(/*! ./keys */ \"./src/utils/keys.js\");\n\nclass InputManager {\n    constructor() {\n        this.pressedKeys = {};\n\n        document.addEventListener('keydown', e => this.setKey(e, true));\n        document.addEventListener('keyup', e => this.setKey(e, false));\n    }\n\n    setKey(e, status) {\n        e.preventDefault();\n        let key;\n        switch (e.keyCode) {\n            case 32:\n                key = KEYS.SPACE;\n                break;\n            case 37:\n                key = KEYS.LEFT;\n                break;\n            case 38:\n                key = KEYS.UP;\n                break;\n            case 39:\n                key = KEYS.RIGHT;\n                break;\n            case 40:\n                key = KEYS.DOWN;\n                break;\n            default:\n                // Convert ASCII codes to letters\n                key = String.fromCharCode(e.keyCode);\n\n        }\n\n        this.pressedKeys[key] = status;\n    }\n\n    isPressed(key) {\n        return this.pressedKeys[key];\n    }\n}\n\nmodule.exports = InputManager;\n\n//# sourceURL=webpack:///./src/utils/input.js?");
+
+/***/ }),
+
+/***/ "./src/utils/keys.js":
+/*!***************************!*\
+  !*** ./src/utils/keys.js ***!
+  \***************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("const KEYS = {\n    SPACE: \"SPACE\",\n    LEFT: \"LEFT\",\n    UP: \"UP\",\n    RIGHT: \"RIGHT\",\n    DOWN: \"DOWN\"\n};\n\nmodule.exports = KEYS;\n\n//# sourceURL=webpack:///./src/utils/keys.js?");
 
 /***/ }),
 
