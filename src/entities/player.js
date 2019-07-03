@@ -16,7 +16,7 @@ class Player {
             y: 0
         };
 
-        this.speed = this.size * 5;
+        this.speed = this.size * 10;
 
 
         this.ih = inputHandler;
