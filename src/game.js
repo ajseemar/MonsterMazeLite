@@ -30,8 +30,9 @@ class Game {
         this.ctx.fillRect(0, 0, this.width, this.height);
         // this.maze.render(this.ctx);
         this.viewport.render(this.ctx, this.maze.grid.cells);
-        console.log(this.viewport.offset.x, this.viewport.offset.y);
-        this.player.render(this.ctx, this.viewport.offset.x, this.viewport.offset.y);
+        // console.log(this.player.position, this.viewport.offset);
+        // console.log(this.viewport.offset.x, this.viewport.offset.y);
+        this.player.render(this.ctx, this.viewport.offset);
     }
 }
 

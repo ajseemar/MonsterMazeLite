@@ -43,8 +43,8 @@ class Camera {
         this.endTile.row = tile.row + 1 + Math.ceil((this.screen.x / 2) / this.cellSize);
         this.endTile.col = tile.col + 1 + Math.ceil((this.screen.y / 2) / this.cellSize);
         // debugger
-        if (this.endTile.row > this.cellCount) this.endTile.row = this.cellCount - 1;
-        if (this.endTile.col > this.cellCount) this.endTile.col = this.cellCount - 1;
+        if (this.endTile.row > this.cellCount) this.endTile.row = this.cellCount;
+        if (this.endTile.col > this.cellCount) this.endTile.col = this.cellCount;
         // debugger
     }
 
@@ -53,7 +53,11 @@ class Camera {
         for (let j = this.startTile.col; j < this.endTile.col; j++) {
             for (let i = this.startTile.row; i < this.endTile.row; i++) {
                 // console.log(i, j, grid[index(i, j, this.cellCount)]);
-                grid[index(j, i, this.cellCount)].render(ctx, this.offset.x, this.offset.y);
+                // console.log(i, j, index(i, j, this.cellCount));
+                if (!grid[index(i, j, this.cellCount)]) {
+                    debugger
+                }
+                grid[index(i, j, this.cellCount)].render(ctx, this.offset.x, this.offset.y);
             }
         }
     }

@@ -64,13 +64,15 @@ class Player {
         // console.log(this.screenX, this.screenY);postition.
     }
 
-    render(ctx, offsetX, offsetY) {
+    render(ctx, offset) {
         // console.log(this.position.x + offsetX, this.position.y + offsetY);
-        offsetX = 0;
-        offsetY = 0;
+        // offsetX = 0;
+        // offsetY = 0;
         ctx.fillStyle = "#0ff";
         ctx.beginPath();
-        ctx.arc(this.position.x + offsetX, this.position.y + offsetY, this.size, 0, Math.PI * 2)
+        // console.log(offsetX, offsetY, test);
+        ctx.arc(this.position.x + offset.x, this.position.y + offset.y, this.size, 0, Math.PI * 2);
+        // console.log('rendering at...', this.position.x + offsetX, this.position.y + offsetY);
         ctx.closePath();
         ctx.fill();
     }
