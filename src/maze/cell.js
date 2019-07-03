@@ -3,7 +3,7 @@ const index = require('../utils/utils');
 const Node = require('../maze_solver/node');
 
 class Cell {
-    constructor (row, col, size) {
+    constructor(row, col, size) {
         this.row = row;
         this.col = col;
         this.size = size;
@@ -38,7 +38,7 @@ class Cell {
                 },
                 p2: {
                     x: (this.col * this.size) + this.size,
-                    y: (this.row * this.size) + this.size 
+                    y: (this.row * this.size) + this.size
                 }
             },
             "west": {
@@ -54,7 +54,7 @@ class Cell {
         }
     }
 
-    render (ctx) {
+    render(ctx) {
         ctx.strokeStyle = "#53A1F3";
         // ctx.strokeStyle = "#000";
         Object.values(this.walls).forEach(({ p1, p2 }) => {
@@ -64,8 +64,8 @@ class Cell {
             ctx.closePath();
             ctx.stroke();
         });
-        
-        this.node.render(ctx);
+
+        // this.node.render(ctx);
     }
 }
 
