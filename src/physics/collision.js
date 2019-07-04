@@ -45,21 +45,15 @@ class CollisionDetector {
         let slope;
 
         if (dy === 0) {
-            console.log('collided with horizontal wall');
             if (wall.p1.y < player.position.y) {
-                console.log('to top of player');
                 player.position.y = wall.p1.y + 1 + player.radius;
             } else {
-                console.log('to bottom of player');
                 player.position.y = wall.p1.y - 1 - player.radius;
             }
         } else if (dx === 0) {
-            console.log('collided with vertical wall');
             if (wall.p1.x < player.position.x) {
-                console.log('to left of player');
                 player.position.x = wall.p1.x + 1 + player.radius;
             } else {
-                console.log('to right of player');
                 player.position.x = wall.p1.x - 1 - player.radius;
             }
         }
