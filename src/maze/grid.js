@@ -3,7 +3,7 @@ const Cell = require('./cell');
 const index = require('../utils/utils');
 
 class Grid {
-    constructor (size, w, h, ctx) {
+    constructor(size, w, h, ctx) {
         this.ctx = ctx;
         this.cells = new Array(size * size);
         this.size = {
@@ -11,34 +11,36 @@ class Grid {
             h: h
         };
         this.cellCount = size;
-        
+
+        this.cellSize = 70;
+
         // debugger
         this.populateGrid();
         this.populateCells();
         // console.log(this.cells);
     }
 
-    populateGrid () {
+    populateGrid() {
         for (let j = 0; j < this.cellCount; j++) {
-            for(let i = 0; i < this.cellCount; i++) {
+            for (let i = 0; i < this.cellCount; i++) {
                 // debugger
-                this.cells[index(i, j, this.cellCount)] = new Cell(i, j, this.size.w / this.cellCount);
+                this.cells[index(i, j, this.cellCount)] = new Cell(i, j, this.cellSize);
             }
         }
         // console.log(this.cells);
     }
 
-    populateCells () {
-        for (let i = 0; i < this.cells.length; i++) 
+    populateCells() {
+        for (let i = 0; i < this.cells.length; i++)
             Grid.populateCellWithNeighbors(this.cells[i], this.cells, this.cellCount, this.ctx);
     }
 
-    static populateCellWithNeighbors (cell, cells, size, ctx) {
+    static populateCellWithNeighbors(cell, cells, size, ctx) {
         // debugger
         if (cells[index(cell.row - 1, cell.col, size)]) {
             // if (!cell.visited) {
             if (cell.row - 1 >= 0) {
-            cell.neighbors.push({ 'north': cells[index(cell.row - 1, cell.col, size)] });
+                cell.neighbors.push({ 'north': cells[index(cell.row - 1, cell.col, size)] });
             }
         }
         if (cells[index(cell.row, cell.col + 1, size)]) {
@@ -49,7 +51,7 @@ class Grid {
         if (cells[index(cell.row + 1, cell.col, size)]) {
             // if (!cell.visited) {
             if (cell.row + 1 <= size - 1) {
-            cell.neighbors.push({ 'south': cells[index(cell.row + 1, cell.col, size)] });
+                cell.neighbors.push({ 'south': cells[index(cell.row + 1, cell.col, size)] });
             }
         }
         if (cells[index(cell.row, cell.col - 1, size)]) {
@@ -65,7 +67,7 @@ class Grid {
         // debugger
     }
 
-    render (ctx) {
+    render(ctx) {
         for (let j = 0; j < this.cellCount; j++) {
             for (let i = 0; i < this.cellCount; i++) {
                 let cell = this.cells[index(j, i, this.cellCount)];
@@ -79,7 +81,7 @@ class Grid {
                 // debugger
                 // cell.node.render(ctx);
 
-                
+
 
             }
         }

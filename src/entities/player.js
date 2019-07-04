@@ -3,6 +3,7 @@ const KEYS = require('../utils/keys');
 class Player {
     constructor(size, inputHandler, cellSize, cellCount) {
         this.size = size / 3; //c.width / (size * 2);
+        this.radius = this.size;
         // this.screenX = 0;
         // this.screenY = 0;
 
@@ -16,7 +17,7 @@ class Player {
             y: 0
         };
 
-        this.speed = this.size * 10;
+        this.speed = this.size * 20;
 
 
         this.ih = inputHandler;

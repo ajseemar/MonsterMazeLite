@@ -1,9 +1,9 @@
 const index = require('../utils/utils');
 
 class Camera {
-    constructor(width, height, cellCount) {
+    constructor(width, height, cellCount, cellSize) {
         this.cellCount = cellCount;
-        this.cellSize = width / this.cellCount;
+        this.cellSize = cellSize;
         // debugger
         this.screen = {
             x: width,

@@ -2,6 +2,7 @@ const Maze = require('./maze/maze');
 const InputManager = require('./utils/input');
 const Player = require('./entities/player');
 const Camera = require('./entities/camera');
+const CollisionDetector = require('./physics/collision');
 
 class Game {
     constructor(size) {
@@ -11,14 +12,18 @@ class Game {
         this.height = this.canvas.height;
         this.initialTime = Date.now();
         this.maze = new Maze(size, this.width, this.height, this.ctx);
-        this.viewport = new Camera(this.width, this.height, size)
+        this.viewport = new Camera(this.width, this.height, size, this.maze.grid.cellSize);
         this.inputHandler = new InputManager();
         this.player = new Player(this.width / size, this.inputHandler, this.width / size, size);
-        this.walls = []
+        this.collisionDetector = new CollisionDetector(size);
     }
 
     update(dt) {
+        this.collisionDetector.updateCollidables(this.viewport.startTile, this.viewport.endTile, this.maze.grid.cells);
+        // console.log(this.collisionDetector.walls);
         this.player.update(dt);
+
+        this.collisionDetector.detectCollision(this.player);
         this.viewport.update(this.player.position.x, this.player.position.y);
     }
 
