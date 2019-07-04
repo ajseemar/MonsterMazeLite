@@ -10,10 +10,11 @@ class Game {
         this.width = this.canvas.width;
         this.height = this.canvas.height;
         this.initialTime = Date.now();
-        window.maze = this.maze = new Maze(size, this.width, this.height, this.ctx);
+        this.maze = new Maze(size, this.width, this.height, this.ctx);
         this.viewport = new Camera(this.width, this.height, size)
         this.inputHandler = new InputManager();
-        this.player = new Player(this.width / size, this.inputHandler, this.width / size, size)
+        this.player = new Player(this.width / size, this.inputHandler, this.width / size, size);
+        this.walls = []
     }
 
     update(dt) {

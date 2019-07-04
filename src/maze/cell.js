@@ -1,6 +1,8 @@
 const index = require('../utils/utils');
 
 const Node = require('../maze_solver/node');
+const Wall = require('./wall');
+const Point = require('./point');
 
 class Cell {
     constructor(row, col, size) {
@@ -11,46 +13,22 @@ class Cell {
         this.node = new Node(row, col, size);
         this.neighbors = [];
         this.walls = {
-            "north": {
-                p1: {
-                    x: this.col * this.size,
-                    y: this.row * this.size
-                },
-                p2: {
-                    x: (this.col * this.size) + this.size,
-                    y: this.row * this.size
-                }
-            },
-            "east": {
-                p1: {
-                    x: (this.col * this.size) + this.size,
-                    y: this.row * this.size
-                },
-                p2: {
-                    x: (this.col * this.size) + this.size,
-                    y: (this.row * this.size) + this.size
-                }
-            },
-            "south": {
-                p1: {
-                    x: (this.col * this.size),
-                    y: (this.row * this.size) + this.size
-                },
-                p2: {
-                    x: (this.col * this.size) + this.size,
-                    y: (this.row * this.size) + this.size
-                }
-            },
-            "west": {
-                p1: {
-                    x: this.col * this.size,
-                    y: this.row * this.size
-                },
-                p2: {
-                    x: this.col * this.size,
-                    y: (this.row * this.size) + this.size
-                }
-            }
+            "north": new Wall(
+                new Point(this.col * this.size, this.row * this.size),
+                new Point((this.col * this.size) + this.size, this.row * this.size)
+            ),
+            "east": new Wall(
+                new Point((this.col * this.size) + this.size, this.row * this.size),
+                new Point((this.col * this.size) + this.size, (this.row * this.size) + this.size)
+            ),
+            "south": new Wall(
+                new Point((this.col * this.size), (this.row * this.size) + this.size),
+                new Point((this.col * this.size) + this.size, (this.row * this.size) + this.size)
+            ),
+            "west": new Wall(
+                new Point(this.col * this.size, this.row * this.size),
+                new Point(this.col * this.size, (this.row * this.size) + this.size)
+            )
         }
     }
 
