@@ -6,23 +6,23 @@ class ResourceManager {
     }
 
     load(resource) {
-        if (resource instanceof Array) {
-            resource.forEach(res => this._load(res));
+        if (resource instanceof Object) {
+            Object.keys(resource).forEach(key => this._load(key, resource[key]));
         } else this._load(resource);
     }
 
-    _load(url) {
-        if (this.resourceCache[url]) return this.resourceCache[url];
+    _load(key, url) {
+        if (this.resourceCache[key]) return this.resourceCache[key];
         else {
             this.loading.push(url);
 
             const img = new Image();
             img.onload = () => {
-                this.resourceCache[url] = img;
+                this.resourceCache[key] = img;
                 if (this.isReady()) this.callbacks.forEach(cb => cb());
             }
             img.src = url;
-            this.resourceCache[url] = img;
+            this.resourceCache[key] = img;
         }
     }
 

@@ -46,15 +46,15 @@ class CollisionDetector {
 
         if (dy === 0) {
             if (wall.p1.y < player.position.y) {
-                player.position.y = wall.p1.y + 2 + player.radius;
+                player.position.y = wall.p1.y + 1 + player.radius;
             } else {
-                player.position.y = wall.p1.y - 2 - player.radius;
+                player.position.y = wall.p1.y - 1 - player.radius;
             }
         } else if (dx === 0) {
             if (wall.p1.x < player.position.x) {
-                player.position.x = wall.p1.x + 2 + player.radius;
+                player.position.x = wall.p1.x + 1 + player.radius;
             } else {
-                player.position.x = wall.p1.x - 2 - player.radius;
+                player.position.x = wall.p1.x - 1 - player.radius;
             }
         }
     }

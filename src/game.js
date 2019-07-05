@@ -5,19 +5,28 @@ const Camera = require('./entities/camera');
 const CollisionDetector = require('./physics/collision');
 
 class Game {
-    constructor(size) {
+    constructor(size, rm) {
+        this.rm = rm;
+
         this.canvas = document.getElementById('canvas');
-        // this.canvas.width = window.innerWidth;
-        // this.canvas.height = innerHeight;
         this.ctx = this.canvas.getContext('2d');
         this.width = this.canvas.width;
         this.height = this.canvas.height;
+
         this.initialTime = Date.now();
+
         this.maze = new Maze(size, this.width, this.height, this.ctx);
         this.viewport = new Camera(this.width, this.height, size, this.maze.grid.cellSize);
         this.inputHandler = new InputManager();
-        this.player = new Player(this.width / size, this.inputHandler, this.width / size, size);
+        this.player = new Player(rm.get('player_standing'), this.width / size, this.inputHandler, this.width / size, size);
         this.collisionDetector = new CollisionDetector(size);
+
+        this.rm.onReady(this.initPlayer.bind(this));
+    }
+
+    initPlayer() {
+        this.player.sprite = this.rm.get('player_standing');
+        // debugger
     }
 
     update(dt) {

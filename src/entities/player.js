@@ -1,7 +1,9 @@
 const KEYS = require('../utils/keys');
 
 class Player {
-    constructor(size, inputHandler, cellSize, cellCount) {
+    constructor(sprite, size, inputHandler, cellSize, cellCount) {
+        this.sprite = sprite;
+        console.log(this.sprite.width, this.sprite.height);
         this.size = size / 3; //c.width / (size * 2);
         this.radius = this.size;
         // this.screenX = 0;
@@ -69,6 +71,13 @@ class Player {
         // console.log(this.position.x + offsetX, this.position.y + offsetY);
         // offsetX = 0;
         // offsetY = 0;
+        // ctx.save();
+        // ctx.translate(this.position.x, this.position.y)
+        // ctx.rotate(this.angle);
+        ctx.drawImage(this.sprite, this.position.x, this.position.y);
+        // ctx.drawImage(this.sprite, this.position.x, this.position.y);
+        // ctx.restore();
+
         ctx.fillStyle = "#0ff";
         ctx.beginPath();
         // console.log(offsetX, offsetY, test);
