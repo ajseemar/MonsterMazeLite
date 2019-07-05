@@ -22,12 +22,24 @@ class Game {
         this.player = new Player(rm.get('player_standing'), this.width / size, this.inputHandler, this.width / size, size);
         this.collisionDetector = new CollisionDetector(size);
 
-        window.addEventListener('mousemove', this.handleRotation.bind(this));
+        this.canvas.addEventListener('mousemove', this.handleRotation.bind(this));
+        this.canvas.addEventListener('mouseenter', this.handleMouseEnter.bind(this));
+        this.canvas.addEventListener('mouseleave', this.handleMouseLeave.bind(this));
     }
 
     initPlayer() {
         this.player.sprite = this.rm.get('player_standing');
         // debugger
+    }
+
+    handleMouseEnter() {
+        console.log('mouse is in canvas');
+        this.mouseActive = true;
+    }
+
+    handleMouseLeave() {
+        console.log('mouse left canvas');
+        this.mouseActive = false;
     }
 
     handleRotation(e) {
@@ -40,7 +52,21 @@ class Game {
             y: e.clientY - rect.top
         };
 
-        this.player.handleRotation(mousePos);
+        const dy = mousePos.y - this.canvas.height / 2;
+        const dx = mousePos.x - this.canvas.width / 2;
+
+        this.ctx.strokeStyle = "#f00";
+        this.ctx.strokeWidth = 3;
+        this.ctx.beginPath();
+        this.ctx.moveTo(this.player.position.x + this.viewport.offset.x, this.player.position.y + this.viewport.offset.y);
+        this.ctx.lineTo(mousePos.x, mousePos.y);
+        this.ctx.closePath();
+        this.ctx.stroke();
+        // debugger
+        // console.log(this.player.position.x + this.viewport.offset.x, this.player.position.y + this.viewport.offset.y);
+        // console.log(mousePos.x, mousePos.y);
+
+        this.player.handleRotation(mousePos, dy, dx);
 
         // this.player.angle = Math.atan2(mousePos.y - this.player.position.y + (this.player.sprite.width / 2), mousePos.x - this.player.position.x + (this.player.sprite.height / 2));
         // this.player.angle = Math.atan2(mousePos.y - this.player.position.y, mousePos.x - this.player.position.x);

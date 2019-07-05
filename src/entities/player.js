@@ -31,11 +31,13 @@ class Player {
 
     }
 
-    handleRotation(mousePos) {
-        const dy = mousePos.y - this.position.y + this.sprite.height / 2;
-        const dx = mousePos.x - this.position.x + this.sprite.width / 2;
+    handleRotation(mousePos, dy, dx) {
+        // const dy = mousePos.y - this.position.y + this.sprite.height / 2;
+        // const dx = mousePos.x - this.position.x + this.sprite.width / 2;
 
-        this.angle = Math.atan2(dy, dx) % 360;
+        this.angle = Math.atan2(dy, dx);
+
+
     }
 
     handleInput() {
