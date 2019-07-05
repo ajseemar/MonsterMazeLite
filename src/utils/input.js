@@ -15,6 +15,18 @@ class InputManager {
             case 32:
                 key = KEYS.SPACE;
                 break;
+            case 65:
+                key = KEYS.LEFT;
+                break;
+            case 87:
+                key = KEYS.UP;
+                break;
+            case 68:
+                key = KEYS.RIGHT;
+                break;
+            case 83:
+                key = KEYS.DOWN;
+                break;
             case 37:
                 key = KEYS.LEFT;
                 break;

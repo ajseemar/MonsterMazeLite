@@ -7,6 +7,7 @@ const CollisionDetector = require('./physics/collision');
 class Game {
     constructor(size, rm) {
         this.rm = rm;
+        this.rm.onReady(this.initPlayer.bind(this));
 
         this.canvas = document.getElementById('canvas');
         this.ctx = this.canvas.getContext('2d');
@@ -21,13 +22,41 @@ class Game {
         this.player = new Player(rm.get('player_standing'), this.width / size, this.inputHandler, this.width / size, size);
         this.collisionDetector = new CollisionDetector(size);
 
-        this.rm.onReady(this.initPlayer.bind(this));
+        window.addEventListener('mousemove', this.handleRotation.bind(this));
     }
 
     initPlayer() {
         this.player.sprite = this.rm.get('player_standing');
         // debugger
     }
+
+    handleRotation(e) {
+        // this.updatePivot();
+
+        // this.angle = Math.atan2(e.clientY - this.regY, e.clientX - this.regX);
+        const rect = this.canvas.getBoundingClientRect();
+        const mousePos = {
+            x: e.clientX - rect.left,
+            y: e.clientY - rect.top
+        };
+
+        this.player.handleRotation(mousePos);
+
+        // this.player.angle = Math.atan2(mousePos.y - this.player.position.y + (this.player.sprite.width / 2), mousePos.x - this.player.position.x + (this.player.sprite.height / 2));
+        // this.player.angle = Math.atan2(mousePos.y - this.player.position.y, mousePos.x - this.player.position.x);
+        // console.log(this.angle);
+        // console.log(mousePos.x, mousePos.y);
+
+        // this.angle = this.angle * (180 / Math.PI);
+        // console.log(this.angle);
+
+        // if (this.angle < 0) {
+
+        //     this.angle = 360 - (-this.angle);
+
+        // }
+    }
+
 
     update(dt) {
         this.collisionDetector.updateCollidables(this.viewport.startTile, this.viewport.endTile, this.maze.grid.cells);
