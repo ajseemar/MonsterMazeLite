@@ -12,7 +12,7 @@ class Grid {
         };
         this.cellCount = size;
 
-        this.cellSize = 70;
+        this.cellSize = 100;
 
         // debugger
         this.populateGrid();

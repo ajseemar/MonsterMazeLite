@@ -7,6 +7,8 @@ const CollisionDetector = require('./physics/collision');
 class Game {
     constructor(size) {
         this.canvas = document.getElementById('canvas');
+        // this.canvas.width = window.innerWidth;
+        // this.canvas.height = innerHeight;
         this.ctx = this.canvas.getContext('2d');
         this.width = this.canvas.width;
         this.height = this.canvas.height;
