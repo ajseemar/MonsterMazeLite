@@ -84,7 +84,7 @@ class Player {
         // debugger
         const bullet = new Bullet(this.bulletSprite, this.position);
         let x, y;
-        if (this.delta) {
+        if (navigator.getGamepads()[0]) {
             x = this.delta.x;
             y = this.delta.y;
         } else {
