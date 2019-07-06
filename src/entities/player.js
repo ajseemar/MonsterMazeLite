@@ -1,4 +1,5 @@
 const KEYS = require('../utils/keys');
+const Bullet = require('./bullet');
 
 class Player {
     constructor(sprite, size, inputHandler, cellSize, cellCount) {
@@ -29,10 +30,12 @@ class Player {
         this.cellSize = cellSize;
         this.cellCount = cellCount;
 
+        this.bullets = [];
+
     }
 
-    handleRotation(dy, dx) {
-        this.angle = Math.atan2(dy, dx) * 180 / Math.PI;
+    handleRotation(delta) {
+        this.angle = Math.atan2(delta.y, delta.x) * 180 / Math.PI;
 
         if (this.angle < 0) {
 
@@ -65,6 +68,20 @@ class Player {
         }
     }
 
+    shoot(delta) {
+        // debugger
+        const bullet = new Bullet(this.bulletSprite, this.position);
+        let x = delta.x;
+        let y = delta.y;
+        const magnitude = Math.sqrt(x * x + y * y);
+
+        x /= magnitude;
+        y /= magnitude;
+
+        bullet.updateVelocity(x, y);
+        this.bullets.push(bullet);
+    }
+
     update(dt) {
         this.handleInput();
         // const maxX = this.size * 100 * 3 - (c.width - 10 * (c.width / 100));
@@ -72,6 +89,8 @@ class Player {
         // console.log(dt)
         this.position.x += this.velocity.x * dt;
         this.position.y += this.velocity.y * dt;
+
+        Bullet.update(this.bullets, dt);
         // this.position.x = Math.max(0, Math.min(this.position.x, (this.cellCount - 1) * this.cellSize));
         // this.position.y = Math.max(0, Math.min(this.position.y, (this.cellCount - 1) * this.cellSize));
         // console.log(this.position);
@@ -102,6 +121,10 @@ class Player {
         // ctx.drawImage(this.sprite, this.position.x - this.width / 2, this.position.y - this.height / 2);
         // ctx.drawImage(this.sprite, this.position.x, this.position.y);
         ctx.restore();
+
+        Bullet.render(this.bullets, ctx, offset);
+
+
 
         // ctx.fillStyle = "#0ff";
         // ctx.beginPath();

@@ -23,29 +23,18 @@ class Game {
         this.collisionDetector = new CollisionDetector(size);
 
         this.canvas.addEventListener('mousemove', this.handleRotation.bind(this));
+        this.canvas.addEventListener('click', this.handleClick.bind(this));
         // this.canvas.addEventListener('mouseenter', this.handleMouseEnter.bind(this));
         // this.canvas.addEventListener('mouseleave', this.handleMouseLeave.bind(this));
     }
 
     initPlayer() {
         this.player.sprite = this.rm.get('player_standing');
+        this.player.bulletSprite = this.rm.get('bullet');
         // debugger
     }
 
-    handleMouseEnter() {
-        console.log('mouse is in canvas');
-        this.mouseActive = true;
-    }
-
-    handleMouseLeave() {
-        console.log('mouse left canvas');
-        this.mouseActive = false;
-    }
-
-    handleRotation(e) {
-        // this.updatePivot();
-
-        // this.angle = Math.atan2(e.clientY - this.regY, e.clientX - this.regX);
+    getMousePosition(e) {
         const rect = this.canvas.getBoundingClientRect();
         const mousePos = {
             x: e.clientX - rect.left,
@@ -55,7 +44,24 @@ class Game {
         const dy = mousePos.y - this.canvas.height / 2;
         const dx = mousePos.x - this.canvas.width / 2;
 
-        this.player.handleRotation(dy, dx);
+        return { x: dx, y: dy };
+    }
+
+    handleClick(e) {
+        e.preventDefault();
+        this.player.shoot(this.getMousePosition(e));
+    }
+
+    handleRotation(e) {
+        // this.updatePivot();
+
+        // this.angle = Math.atan2(e.clientY - this.regY, e.clientX - this.regX);
+        // const mousePos = this.getMousePosition(e);
+
+        // const dy = mousePos.y - this.canvas.height / 2;
+        // const dx = mousePos.x - this.canvas.width / 2;
+
+        this.player.handleRotation(this.getMousePosition(e));
 
         // this.player.angle = Math.atan2(mousePos.y - this.player.position.y + (this.player.sprite.width / 2), mousePos.x - this.player.position.x + (this.player.sprite.height / 2));
         // this.player.angle = Math.atan2(mousePos.y - this.player.position.y, mousePos.x - this.player.position.x);
