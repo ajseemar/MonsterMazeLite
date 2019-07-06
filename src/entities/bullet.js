@@ -1,3 +1,5 @@
+const uuid = require('uuid');
+
 class Bullet {
     constructor(sprite, pos) {
         this.id = uuid();
@@ -26,6 +28,10 @@ class Bullet {
         this.velocity.y = y * this.speed;
     }
 
+    checkCollision() {
+
+    }
+
     update(dt) {
         this.position.x += this.velocity.x * dt;
         this.position.y += this.velocity.y * dt;
@@ -36,11 +42,14 @@ class Bullet {
     }
 
     static update(bullets, dt) {
-        bullets.forEach(bullet => bullet.update(dt));
+        Object.keys(bullets).forEach(id => {
+            bullets[id].update(dt);
+            if (bullets[id].collided) delete bullets[id];
+        });
     }
 
     static render(bullets, ...renderArgs) {
-        bullets.forEach(bullet => bullet.render(...renderArgs));
+        Object.values(bullets).forEach(bullet => bullet.render(...renderArgs));
     }
 }
 

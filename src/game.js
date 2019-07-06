@@ -46,7 +46,6 @@ class Game {
     initPlayer() {
         this.player.sprite = this.rm.get('player_standing');
         this.player.bulletSprite = this.rm.get('bullet');
-        // debugger
     }
 
     getMousePosition(e) {
@@ -135,6 +134,8 @@ class Game {
         this.player.update(dt);
 
         this.collisionDetector.detectCollision(this.player);
+
+
         this.viewport.update(this.player.position.x, this.player.position.y);
     }
 
