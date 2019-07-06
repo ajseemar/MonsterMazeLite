@@ -23,8 +23,8 @@ class Game {
         this.collisionDetector = new CollisionDetector(size);
 
         this.canvas.addEventListener('mousemove', this.handleRotation.bind(this));
-        this.canvas.addEventListener('mouseenter', this.handleMouseEnter.bind(this));
-        this.canvas.addEventListener('mouseleave', this.handleMouseLeave.bind(this));
+        // this.canvas.addEventListener('mouseenter', this.handleMouseEnter.bind(this));
+        // this.canvas.addEventListener('mouseleave', this.handleMouseLeave.bind(this));
     }
 
     initPlayer() {
@@ -55,18 +55,7 @@ class Game {
         const dy = mousePos.y - this.canvas.height / 2;
         const dx = mousePos.x - this.canvas.width / 2;
 
-        this.ctx.strokeStyle = "#f00";
-        this.ctx.strokeWidth = 3;
-        this.ctx.beginPath();
-        this.ctx.moveTo(this.player.position.x + this.viewport.offset.x, this.player.position.y + this.viewport.offset.y);
-        this.ctx.lineTo(mousePos.x, mousePos.y);
-        this.ctx.closePath();
-        this.ctx.stroke();
-        // debugger
-        // console.log(this.player.position.x + this.viewport.offset.x, this.player.position.y + this.viewport.offset.y);
-        // console.log(mousePos.x, mousePos.y);
-
-        this.player.handleRotation(mousePos, dy, dx);
+        this.player.handleRotation(dy, dx);
 
         // this.player.angle = Math.atan2(mousePos.y - this.player.position.y + (this.player.sprite.width / 2), mousePos.x - this.player.position.x + (this.player.sprite.height / 2));
         // this.player.angle = Math.atan2(mousePos.y - this.player.position.y, mousePos.x - this.player.position.x);

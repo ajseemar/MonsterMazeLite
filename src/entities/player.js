@@ -31,13 +31,14 @@ class Player {
 
     }
 
-    handleRotation(mousePos, dy, dx) {
-        // const dy = mousePos.y - this.position.y + this.sprite.height / 2;
-        // const dx = mousePos.x - this.position.x + this.sprite.width / 2;
+    handleRotation(dy, dx) {
+        this.angle = Math.atan2(dy, dx) * 180 / Math.PI;
 
-        this.angle = Math.atan2(dy, dx);
+        if (this.angle < 0) {
 
+            this.angle = 360 + this.angle;
 
+        }
     }
 
     handleInput() {
@@ -96,19 +97,19 @@ class Player {
         // this.angle = 0;
         ctx.translate(this.position.x + offset.x, this.position.y + offset.y);
         // console.log(this.position.x + offset.x, this.position.y + offset.y);
-        ctx.rotate(this.angle * 180 / Math.PI);
+        ctx.rotate(this.angle * Math.PI / 180);
         ctx.drawImage(this.sprite, -this.sprite.width / 2, -this.sprite.height / 2);
         // ctx.drawImage(this.sprite, this.position.x - this.width / 2, this.position.y - this.height / 2);
         // ctx.drawImage(this.sprite, this.position.x, this.position.y);
         ctx.restore();
 
-        ctx.fillStyle = "#0ff";
-        ctx.beginPath();
+        // ctx.fillStyle = "#0ff";
+        // ctx.beginPath();
         // console.log(offsetX, offsetY, test);
-        ctx.arc(this.position.x + offset.x, this.position.y + offset.y, 5, 0, Math.PI * 2);
+        // ctx.arc(this.position.x + offset.x, this.position.y + offset.y, 5, 0, Math.PI * 2);
         // console.log('rendering at...', this.position.x + offsetX, this.position.y + offsetY);
-        ctx.closePath();
-        ctx.fill();
+        // ctx.closePath();
+        // ctx.fill();
 
     }
 }
