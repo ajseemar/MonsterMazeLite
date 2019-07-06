@@ -22,15 +22,27 @@ class Player {
 
         this.angle = 0;
 
-        this.speed = this.size * 20;
-
+        this.speed = 250;
+        // console.log(this.speed);
 
         this.ih = inputHandler;
 
         this.cellSize = cellSize;
         this.cellCount = cellCount;
 
-        this.bullets = [];
+        this.bullets = {};
+
+        const debounce = (func, delay) => {
+            let inDebounce
+            return function () {
+                const context = this
+                const args = arguments
+                clearTimeout(inDebounce)
+                inDebounce = setTimeout(() => func.apply(context, args), delay)
+            }
+        }
+
+        this.shoot = debounce(this.shoot, 10);
 
     }
 
@@ -71,19 +83,25 @@ class Player {
     shoot(delta) {
         // debugger
         const bullet = new Bullet(this.bulletSprite, this.position);
-        let x = delta.x;
-        let y = delta.y;
+        let x, y;
+        if (this.delta) {
+            x = this.delta.x;
+            y = this.delta.y;
+        } else {
+            x = delta.x;
+            y = delta.y;
+        }
         const magnitude = Math.sqrt(x * x + y * y);
 
         x /= magnitude;
         y /= magnitude;
 
         bullet.updateVelocity(x, y);
-        this.bullets.push(bullet);
+        this.bullets[bullet.id] = bullet;
     }
 
     update(dt) {
-        this.handleInput();
+        // this.handleInput();
         // const maxX = this.size * 100 * 3 - (c.width - 10 * (c.width / 100));
         // const maxY = this.size * 100 * 3 - (c.height - 10 * (c.height / 100));
         // console.log(dt)

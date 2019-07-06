@@ -26,6 +26,21 @@ class Game {
         this.canvas.addEventListener('click', this.handleClick.bind(this));
         // this.canvas.addEventListener('mouseenter', this.handleMouseEnter.bind(this));
         // this.canvas.addEventListener('mouseleave', this.handleMouseLeave.bind(this));
+        this.mousePos = {
+            x: 0,
+            y: 0
+        };
+        window.addEventListener("gamepadconnected", (e) => {
+            // console.log("A gamepad connected:");
+            console.log(e.gamepad);
+            this.inputHandler.gamepad = e.gamepad
+        });
+
+        window.addEventListener("gamepaddisconnected", (event) => {
+            console.log("A gamepad disconnected:");
+            delete this.inputHandler.gamepad;
+            console.log(event.gamepad);
+        });
     }
 
     initPlayer() {
@@ -60,9 +75,7 @@ class Game {
 
         // const dy = mousePos.y - this.canvas.height / 2;
         // const dx = mousePos.x - this.canvas.width / 2;
-
-        this.player.handleRotation(this.getMousePosition(e));
-
+        this.mousePos = this.getMousePosition(e);
         // this.player.angle = Math.atan2(mousePos.y - this.player.position.y + (this.player.sprite.width / 2), mousePos.x - this.player.position.x + (this.player.sprite.height / 2));
         // this.player.angle = Math.atan2(mousePos.y - this.player.position.y, mousePos.x - this.player.position.x);
         // console.log(this.angle);
@@ -78,9 +91,46 @@ class Game {
         // }
     }
 
+    updateGamepad() {
+        this.gamepad = navigator.getGamepads()[0];
+        if (!this.gamepad) return false; // no gamepad to update. Use key states from inputHandler
+
+        // handle shooting bullets
+        if (this.gamepad.axes[4] > 0) {
+            // console.log('Right Trigger Pressed');
+            this.player.shoot();
+        }
+
+        // handle velocity
+        this.player.velocity.x = this.gamepad.axes[0] * this.player.speed; //this.player.speed;
+        this.player.velocity.y = this.gamepad.axes[1] * this.player.speed; //this.player.speed;
+
+        // handle rotation
+        if (this.gamepad.axes[2] !== 0 && this.gamepad.axes[3] !== 0) {
+            this.player.delta = {
+                x: this.gamepad.axes[2],
+                y: this.gamepad.axes[3]
+            };
+            this.player.angle = Math.atan2(this.gamepad.axes[3], this.gamepad.axes[2]) * 180 / Math.PI;
+        }
+
+        if (this.player.angle < 0) {
+
+            this.player.angle = 360 + this.player.angle;
+
+        }
+
+        // successfully updated gamepad
+        return true;
+    }
+
 
     update(dt) {
         this.collisionDetector.updateCollidables(this.viewport.startTile, this.viewport.endTile, this.maze.grid.cells);
+        if (!this.updateGamepad()) {
+            this.player.handleInput();
+            this.player.handleRotation(this.mousePos);
+        }
         // console.log(this.collisionDetector.walls);
         this.player.update(dt);
 

@@ -48,6 +48,25 @@ class InputManager {
         this.pressedKeys[key] = status;
     }
 
+    // update() {
+    //     // debugger
+    //     const gp = navigator.getGamepads()[0];
+    //     if (!gp) return;
+    //     // if (!this.gamepad) return;
+    //     // if (this.gamepad.axes[4] > 0) {
+    //     //     console.log('Right Trigger Pressed');
+    //     // }
+    //     if (gp.buttons[0].pressed) {
+    //         console.log('a button pressed');
+    //     }
+    //     if (gp.buttons[0].value === 1) {
+    //         console.log('a button value changed');
+    //     }
+    //     if (gp.axes[5] > 0) {
+    //         console.log('Left Trigger Pressed');
+    //     }
+    // }
+
     isPressed(key) {
         return this.pressedKeys[key];
     }

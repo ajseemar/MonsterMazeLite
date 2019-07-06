@@ -1,5 +1,7 @@
 class Bullet {
     constructor(sprite, pos) {
+        this.id = uuid();
+
         this.sprite = sprite;
 
         this.position = {
@@ -15,6 +17,8 @@ class Bullet {
         this.radius = 4;
 
         this.speed = 1000;
+
+        this.collided = false;
     }
 
     updateVelocity(x, y) {

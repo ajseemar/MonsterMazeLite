@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/ajseemar/MonsterMazeLite#readme",
   "dependencies": {
+    "uuid": "^3.3.2",
     "webpack": "^4.31.0",
     "webpack-cli": "^3.3.2"
   }
