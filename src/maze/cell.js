@@ -34,7 +34,6 @@ class Cell {
 
     render(ctx, offsetX, offsetY) {
         ctx.strokeStyle = "#53A1F3";
-        // ctx.strokeStyle = "#000";
         Object.values(this.walls).forEach(({ p1, p2 }) => {
             ctx.beginPath();
             ctx.moveTo(p1.x + offsetX, p1.y + offsetY);

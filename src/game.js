@@ -24,15 +24,11 @@ class Game {
 
         this.canvas.addEventListener('mousemove', this.handleRotation.bind(this));
         this.canvas.addEventListener('click', this.handleClick.bind(this));
-        // this.canvas.addEventListener('mouseenter', this.handleMouseEnter.bind(this));
-        // this.canvas.addEventListener('mouseleave', this.handleMouseLeave.bind(this));
         this.mousePos = {
             x: 0,
             y: 0
         };
         window.addEventListener("gamepadconnected", (e) => {
-            // console.log("A gamepad connected:");
-            console.log(e.gamepad);
             this.inputHandler.gamepad = e.gamepad
         });
 
@@ -67,27 +63,7 @@ class Game {
     }
 
     handleRotation(e) {
-        // this.updatePivot();
-
-        // this.angle = Math.atan2(e.clientY - this.regY, e.clientX - this.regX);
-        // const mousePos = this.getMousePosition(e);
-
-        // const dy = mousePos.y - this.canvas.height / 2;
-        // const dx = mousePos.x - this.canvas.width / 2;
         this.mousePos = this.getMousePosition(e);
-        // this.player.angle = Math.atan2(mousePos.y - this.player.position.y + (this.player.sprite.width / 2), mousePos.x - this.player.position.x + (this.player.sprite.height / 2));
-        // this.player.angle = Math.atan2(mousePos.y - this.player.position.y, mousePos.x - this.player.position.x);
-        // console.log(this.angle);
-        // console.log(mousePos.x, mousePos.y);
-
-        // this.angle = this.angle * (180 / Math.PI);
-        // console.log(this.angle);
-
-        // if (this.angle < 0) {
-
-        //     this.angle = 360 - (-this.angle);
-
-        // }
     }
 
     updateGamepad() {
@@ -101,8 +77,8 @@ class Game {
         }
 
         // handle velocity
-        this.player.velocity.x = this.gamepad.axes[0] * this.player.speed; //this.player.speed;
-        this.player.velocity.y = this.gamepad.axes[1] * this.player.speed; //this.player.speed;
+        this.player.velocity.x = this.gamepad.axes[0] * this.player.speed;
+        this.player.velocity.y = this.gamepad.axes[1] * this.player.speed;
 
         // handle rotation
         if (this.gamepad.axes[2] !== 0 && this.gamepad.axes[3] !== 0) {
@@ -130,7 +106,6 @@ class Game {
             this.player.handleInput();
             this.player.handleRotation(this.mousePos);
         }
-        // console.log(this.collisionDetector.walls);
         this.player.update(dt, this.collisionDetector);
 
         const collided = this.collisionDetector.detectCollision(this.player);
@@ -141,16 +116,9 @@ class Game {
     }
 
     render() {
-        // debugger;
-        // this.ctx.fillStyle = "#2a6e09";
-        // this.ctx.clearRect(0, 0, this.width, this.height);
-        // this.ctx.clearRect(0, 0, this.width, this.height);
         this.ctx.fillStyle = "#000";
         this.ctx.fillRect(0, 0, this.width, this.height);
-        // this.maze.render(this.ctx);
         this.viewport.render(this.ctx, this.maze.grid.cells);
-        // console.log(this.player.position, this.viewport.offset);
-        // console.log(this.viewport.offset.x, this.viewport.offset.y);
         this.player.render(this.ctx, this.viewport.offset);
     }
 }

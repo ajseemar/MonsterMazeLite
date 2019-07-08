@@ -2,18 +2,17 @@ const Grid = require('./grid');
 const index = require('../utils/utils');
 
 class Maze {
-    constructor (size, width, height, ctx) {
+    constructor(size, width, height, ctx) {
         this.cellCount = size;
         this.width = width;
         this.height = height;
         this.grid = new Grid(this.cellCount, this.width, this.height, ctx);
 
         this.generateMaze();
-        // console.log(this.grid.cells);
     }
 
 
-    generateMaze () {
+    generateMaze() {
         let currentCell = this.grid.cells[0];
         currentCell.visited = true;
         const stack = [currentCell];
@@ -22,7 +21,6 @@ class Maze {
             let neighbors = currentCell.neighbors.filter(obj => {
                 let cell = Object.values(obj)[0];
                 if (!cell) return null;
-                // console.log(cell.visited);
                 return !cell.visited;
             });
 
@@ -72,7 +70,7 @@ class Maze {
         }
     }
 
-    render (ctx) {
+    render(ctx) {
         this.grid.render(ctx);
     }
 }

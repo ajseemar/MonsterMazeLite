@@ -4,18 +4,13 @@ const Point = require('../maze/point');
 
 class CollisionDetector {
     constructor(cellCount) {
-        // this.walls = [];
         this.cellCount = cellCount;
     }
 
     updateCollidables(startTile, endTile, grid) {
-        // debugger
         this.walls = [];
         for (let j = startTile.col; j < endTile.col; j++) {
             for (let i = startTile.row; i < endTile.row; i++) {
-                if (!grid[index(i, j, this.cellCount)]) {
-                    debugger
-                }
                 Object.values(grid[index(i, j, this.cellCount)].walls).forEach(wall => {
                     this.walls.push(wall);
                 });

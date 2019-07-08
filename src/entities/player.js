@@ -4,11 +4,8 @@ const Bullet = require('./bullet');
 class Player {
     constructor(sprite, size, inputHandler, cellSize, cellCount) {
         this.sprite = sprite;
-        // console.log(this.sprite.width, this.sprite.height);
-        this.size = size / 3; //c.width / (size * 2);
+        this.size = size / 3;
         this.radius = this.size * 3 / 2;
-        // this.screenX = 0;
-        // this.screenY = 0;
 
         this.position = {
             x: cellSize / 2,
@@ -23,7 +20,6 @@ class Player {
         this.angle = 0;
 
         this.speed = 250;
-        // console.log(this.speed);
 
         this.ih = inputHandler;
 
@@ -80,30 +76,23 @@ class Player {
 
     handleInput() {
         if (this.ih.isPressed(KEYS.UP)) {
-            // this.velocity.x = 0;
             this.velocity.y = -this.speed;
         } else if (this.ih.isPressed(KEYS.DOWN)) {
-            // this.velocity.x = 0;
             this.velocity.y = this.speed;
         } else {
             this.velocity.y = 0;
-            // this.velocity.x = 0;
         }
 
         if (this.ih.isPressed(KEYS.RIGHT)) {
-            // this.velocity.y = 0;
             this.velocity.x = this.speed;
         } else if (this.ih.isPressed(KEYS.LEFT)) {
-            // this.velocity.y = 0;
             this.velocity.x = -this.speed;
         } else {
             this.velocity.x = 0;
-            // this.velocity.y = 0;
         }
     }
 
     shoot(delta) {
-        // debugger
         const bullet = new Bullet(this.bulletSprite, this.position);
         let x, y;
         if (navigator.getGamepads()[0]) {
@@ -123,56 +112,21 @@ class Player {
     }
 
     update(dt, collisionDetector) {
-        // this.handleInput();
-        // const maxX = this.size * 100 * 3 - (c.width - 10 * (c.width / 100));
-        // const maxY = this.size * 100 * 3 - (c.height - 10 * (c.height / 100));
-        // console.log(dt)
         this.position.x += this.velocity.x * dt;
         this.position.y += this.velocity.y * dt;
 
         Bullet.update(this.bullets, collisionDetector, dt);
-        // this.position.x = Math.max(0, Math.min(this.position.x, (this.cellCount - 1) * this.cellSize));
-        // this.position.y = Math.max(0, Math.min(this.position.y, (this.cellCount - 1) * this.cellSize));
-        // console.log(this.position);
-        // this.screenX = this.position.x;
-        // this.screenY = this.position.y;
-        // console.log(this.screenX, this.screenY);postition.
     }
 
     render(ctx, offset) {
-        // console.log(this.position.x + offsetX, this.position.y + offsetY);
-        // offsetX = 0;
-        // offsetY = 0;
-
-        // ctx.fillStyle = "#0ff";
-        // ctx.beginPath();
-        // // console.log(offsetX, offsetY, test);
-        // ctx.arc(this.position.x + offset.x, this.position.y + offset.y, this.radius, 0, Math.PI * 2);
-        // // console.log('rendering at...', this.position.x + offsetX, this.position.y + offsetY);
-        // ctx.closePath();
-        // ctx.fill();
 
         ctx.save();
-        // this.angle = 0;
         ctx.translate(this.position.x + offset.x, this.position.y + offset.y);
-        // console.log(this.position.x + offset.x, this.position.y + offset.y);
         ctx.rotate(this.angle * Math.PI / 180);
         ctx.drawImage(this.sprite, -this.sprite.width / 2, -this.sprite.height / 2);
-        // ctx.drawImage(this.sprite, this.position.x - this.width / 2, this.position.y - this.height / 2);
-        // ctx.drawImage(this.sprite, this.position.x, this.position.y);
         ctx.restore();
 
         Bullet.render(this.bullets, ctx, offset);
-
-
-
-        // ctx.fillStyle = "#0ff";
-        // ctx.beginPath();
-        // console.log(offsetX, offsetY, test);
-        // ctx.arc(this.position.x + offset.x, this.position.y + offset.y, 5, 0, Math.PI * 2);
-        // console.log('rendering at...', this.position.x + offsetX, this.position.y + offsetY);
-        // ctx.closePath();
-        // ctx.fill();
 
     }
 }
