@@ -21,6 +21,8 @@ class Bullet {
         this.speed = 1000;
 
         this.collided = false;
+
+        this.prevCollisionLength = 0;
     }
 
     updateVelocity(x, y) {
@@ -41,14 +43,29 @@ class Bullet {
         ctx.drawImage(this.sprite, this.position.x + offset.x, this.position.y + offset.y);
     }
 
-    static update(bullets, dt) {
+    static update(bullets, collisionDetector, dt) {
         Object.keys(bullets).forEach(id => {
             bullets[id].update(dt);
+            const collided = collisionDetector.detectCollision(bullets[id]);
+            // console.log(collided.length);
+            // if (collided.length > 0 && collided.length !== this.prevCollisionLength) {
+            //     console.log(collided.length);
+            //     this.prevCollisionLength = collided.length;
+            // }
+            if (collided.length > 0) bullets[id].collided = true;
+            // collided.forEach(bullet => {
+            //     bullet.collided = true;
+            //     // debugger;
+            //     console.log(bullet);
+            // });
             if (bullets[id].collided) delete bullets[id];
+            // console.log(Object.keys(bullets).length);
         });
     }
 
     static render(bullets, ...renderArgs) {
+        // console.log(Object.keys(bullets).length);
+
         Object.values(bullets).forEach(bullet => bullet.render(...renderArgs));
     }
 }

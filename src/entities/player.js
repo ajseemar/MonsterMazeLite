@@ -42,7 +42,29 @@ class Player {
             }
         }
 
-        this.shoot = debounce(this.shoot, 10);
+        const throttle = (func, limit) => {
+            let lastFunc
+            let lastRan
+            return function () {
+                const context = this
+                const args = arguments
+                if (!lastRan) {
+                    func.apply(context, args)
+                    lastRan = Date.now()
+                } else {
+                    clearTimeout(lastFunc)
+                    lastFunc = setTimeout(function () {
+                        if ((Date.now() - lastRan) >= limit) {
+                            func.apply(context, args)
+                            lastRan = Date.now()
+                        }
+                    }, limit - (Date.now() - lastRan))
+                }
+            }
+        }
+
+        // this.shoot = debounce(this.shoot, 10);
+        this.shoot = throttle(this.shoot, 100);
 
     }
 
@@ -100,7 +122,7 @@ class Player {
         this.bullets[bullet.id] = bullet;
     }
 
-    update(dt) {
+    update(dt, collisionDetector) {
         // this.handleInput();
         // const maxX = this.size * 100 * 3 - (c.width - 10 * (c.width / 100));
         // const maxY = this.size * 100 * 3 - (c.height - 10 * (c.height / 100));
@@ -108,7 +130,7 @@ class Player {
         this.position.x += this.velocity.x * dt;
         this.position.y += this.velocity.y * dt;
 
-        Bullet.update(this.bullets, dt);
+        Bullet.update(this.bullets, collisionDetector, dt);
         // this.position.x = Math.max(0, Math.min(this.position.x, (this.cellCount - 1) * this.cellSize));
         // this.position.y = Math.max(0, Math.min(this.position.y, (this.cellCount - 1) * this.cellSize));
         // console.log(this.position);

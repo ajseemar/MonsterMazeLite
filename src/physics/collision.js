@@ -23,38 +23,40 @@ class CollisionDetector {
         }
     }
 
-    detectCollision(player) {
+    detectCollision(entity) {
+        const collided = [];
         this.walls.forEach(wall => {
-            const nearest = this.closestPointOnLine(wall, player);
+            const nearest = this.closestPointOnLine(wall, entity);
             if (nearest.x >= Math.min(wall.p1.x, wall.p2.x) && nearest.x <= Math.max(wall.p1.x, wall.p2.x) &&
                 nearest.y >= Math.min(wall.p1.y, wall.p2.y) && nearest.y <= Math.max(wall.p1.y, wall.p2.y)) {
-                const a = nearest.y - player.position.y;
-                const b = nearest.x - player.position.x;
+                const a = nearest.y - entity.position.y;
+                const b = nearest.x - entity.position.x;
 
                 const dist = Math.sqrt(a * a + b * b);
 
-                if (dist < player.radius) this.resolveCollision(wall, player);
+                if (dist < entity.radius) collided.push(wall);
             }
         });
+        return collided;
     }
 
-    resolveCollision(wall, player) {
-        const dy = wall.p2.y - wall.p1.y;
-        const dx = wall.p2.x - wall.p1.x;
+    resolveCollision(collidee, collider) {
+        const dy = collidee.p2.y - collidee.p1.y;
+        const dx = collidee.p2.x - collidee.p1.x;
 
         let slope;
 
         if (dy === 0) {
-            if (wall.p1.y < player.position.y) {
-                player.position.y = wall.p1.y + 1 + player.radius;
+            if (collidee.p1.y < collider.position.y) {
+                collider.position.y = collidee.p1.y + 1 + collider.radius;
             } else {
-                player.position.y = wall.p1.y - 1 - player.radius;
+                collider.position.y = collidee.p1.y - 1 - collider.radius;
             }
         } else if (dx === 0) {
-            if (wall.p1.x < player.position.x) {
-                player.position.x = wall.p1.x + 1 + player.radius;
+            if (collidee.p1.x < collider.position.x) {
+                collider.position.x = collidee.p1.x + 1 + collider.radius;
             } else {
-                player.position.x = wall.p1.x - 1 - player.radius;
+                collider.position.x = collidee.p1.x - 1 - collider.radius;
             }
         }
     }

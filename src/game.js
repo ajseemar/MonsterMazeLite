@@ -131,9 +131,10 @@ class Game {
             this.player.handleRotation(this.mousePos);
         }
         // console.log(this.collisionDetector.walls);
-        this.player.update(dt);
+        this.player.update(dt, this.collisionDetector);
 
-        this.collisionDetector.detectCollision(this.player);
+        const collided = this.collisionDetector.detectCollision(this.player);
+        collided.forEach(collision => this.collisionDetector.resolveCollision(collision, this.player));
 
 
         this.viewport.update(this.player.position.x, this.player.position.y);
